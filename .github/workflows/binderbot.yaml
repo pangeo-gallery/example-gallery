@@ -12,10 +12,6 @@ jobs:
   build:
     name: Binderbot Build
     runs-on: ubuntu-latest
-    env:
-      BINDER_URL: "http://mybinder.org"
-      BINDER_REPO: "binder-examples/requirements"
-      BINDER_REF: "master"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v1
