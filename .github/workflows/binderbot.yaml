@@ -28,7 +28,7 @@ jobs:
       - name: Build notebooks using Binderbot
         run: >
           python -m binderbot.cli
-            --binder-url $BINDER_URL
-            --repo $BINDER_REPO
-            --ref $BINDER_REF
+            --binder-url "$BINDER_URL"
+            --repo "$BINDER_REPO"
+            --ref "$BINDER_REF"
             *.ipynb
