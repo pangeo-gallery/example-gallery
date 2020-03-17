@@ -12,7 +12,8 @@ on:
 env:
   BINDER_URL: "http://mybinder.org"
   BINDER_REPO: "binder-examples/requirements"
-  BINDER_REF: "master"
+  BINDER_REF: master
+  BINDERBOT_TARGET_BRANCH: binderbot-built
 
 jobs:
   build:
@@ -33,3 +34,10 @@ jobs:
           --repo "$BINDER_REPO"
           --ref "$BINDER_REF"
           *.ipynb
+      - name: Commit results
+        if: github.ref == 'refs/heads/master'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.BINDERBOT_TARGET_BRANCH }}
+          force: true
