@@ -8,6 +8,11 @@ on:
     branches:
       - master
 
+env:
+  BINDER_URL: "http://mybinder.org"
+  BINDER_REPO: "binder-examples/requirements"
+  BINDER_REF: "master"
+
 jobs:
   build:
     name: Binderbot Build
@@ -21,8 +26,8 @@ jobs:
       - name: Install Binderbot from github maskter
         run: pip install git+https://github.com/pangeo-gallery/binderbot.git
       - name: Build notebooks using Binderbot
-        run: |
-          python python -m binderbot.cli
+        run: >
+          python -m binderbot.cli
             --binder-url $BINDER_URL
             --repo $BINDER_REPO
             --ref $BINDER_REF
