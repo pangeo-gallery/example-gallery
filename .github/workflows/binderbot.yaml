@@ -1,0 +1,34 @@
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  BINDER_URL: "http://mybinder.org"
+  BINDER_REPO: "binder-examples/requirements"
+  BINDER_REF: "master"
+
+jobs:
+  build:
+    name: Binderbot Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.8'
+          architecture: 'x64'
+      - name: Install Binderbot from github maskter
+        run: pip install git+https://github.com/pangeo-gallery/binderbot.git
+      - name: Build notebooks using Binderbot
+        run: >
+          python -m binderbot.cli
+          --binder-url "$BINDER_URL"
+          --repo "$BINDER_REPO"
+          --ref "$BINDER_REF"
+          *.ipynb
