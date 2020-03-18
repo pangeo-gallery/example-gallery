@@ -5,7 +5,7 @@ Example Gallery
    :alt: Binderbot Build Status
    :target: https://github.com/pangeo-gallery/example-gallery/actions?query=workflow%3ABinderbot
 
-.. image:: https://mybinder.org/badge_logo.svg)
+.. image:: https://mybinder.org/badge_logo.svg
    :alt: Launch Binder
    :target: https://mybinder.org/v2/gh/binder-examples/requirements/master/?urlpath=git-pull?repo=https://github.com/pangeo-gallery/example-gallery
 
