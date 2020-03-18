@@ -2,7 +2,7 @@ name: Pangeo Gallery
 on:
   push:
     branches:
-      - binderbot-build
+      - binderbot-built
 
 env:
   GALLERY_REPO: "git@github.com:pangeo-gallery/pangeo-gallery.git"
@@ -37,4 +37,4 @@ jobs:
         with:
           pr_title: "Update ${{ github.repository }} submodule"
           pr_body: ":crown: *An automated PR*"  # Full markdown support, requires pr_title to be set
-          github_token: ${{ secrets.GITHUB_TOKEN }}      
+          github_token: ${{ secrets.GITHUB_TOKEN }}

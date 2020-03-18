@@ -5,9 +5,13 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '**.ipynb'
   pull_request:
     branches:
       - master
+    paths:
+      - '**.ipynb'
 
 env:
   BINDER_URL: "http://mybinder.org"
