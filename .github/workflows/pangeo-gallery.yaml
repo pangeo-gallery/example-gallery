@@ -1,0 +1,40 @@
+name: Pangeo Gallery
+on:
+  push:
+    branches:
+      - binderbot-build
+
+env:
+  GALLERY_REPO: "git@github.com:pangeo-gallery/pangeo-gallery.git"
+  SLUG: example-gallery
+
+jobs:
+  make-pr:
+    name: Update Gallery
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Gallery Repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ env.GALLERY_REPO }}
+      - name: Add or Update Submodule
+        # TODO: verify that the submodule points to the right place
+        run: >
+          cd repos
+          if [[ -d $SLUG ]]; then
+              git submodule init $SLUG
+              git submodule update --remote $SLUG
+          else
+              git submodule add -b binderbot-built "https://github.com/$GITHUB_REPOSITORY.git" $SLUG
+          fi
+      - name: Commit Submodule Update
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Binderbot update submodule" -a
+      - name: Issue PR to Gallery Repo
+        uses: repo-sync/pull-request@v2
+        with:
+          pr_title: "Update ${{ github.repository }} submodule"
+          pr_body: ":crown: *An automated PR*"  # Full markdown support, requires pr_title to be set
+          github_token: ${{ secrets.GITHUB_TOKEN }}      
