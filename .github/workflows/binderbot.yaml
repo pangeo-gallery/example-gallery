@@ -18,6 +18,7 @@ env:
   BINDER_REPO: "binder-examples/requirements"
   BINDER_REF: master
   BINDERBOT_TARGET_BRANCH: binderbot-built
+  GALLERY_REPOSITORY: "pangeo-gallery/pangeo-gallery"
 
 jobs:
   build:
@@ -51,3 +52,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ env.BINDERBOT_TARGET_BRANCH }}
           force: true
+      - name: Trigger repository dispatch on Pangeo Gallery
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          repository: ${{ env.GALLERY_REPOSITORY }}
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          event-type: update-gallery
+          client-payload: '{"repo": "${{ github.repository }}", "branch": "${{ env.BINDERBOT_TARGET_BRANCH }}", "sha": "${{ github.sha }}"}'
