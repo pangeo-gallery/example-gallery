@@ -46,6 +46,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Binderbot output" -a
+          git fetch
           git checkout --track origin/binderbot-built
           git merge -s ours binderbot-new
       - name: Push commit
