@@ -34,21 +34,20 @@ jobs:
         run: pip install git+https://github.com/pangeo-gallery/binderbot.git
       - name: Build notebooks using Binderbot
         run: |
-          git checkout -b binderbot-new
           python -m binderbot.cli \
           --binder-url "$BINDER_URL" \
           --repo "$BINDER_REPO" \
           --ref "$BINDER_REF" \
           *.ipynb
+          git stash
       - name: Commit files
         if: github.ref == 'refs/heads/master'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Binderbot output" -a
-          git fetch
           git checkout --track origin/binderbot-built
-          git merge -s ours binderbot-new
+          git stash apply
       - name: Push commit
         if: github.ref == 'refs/heads/master'
         uses: ad-m/github-push-action@master
