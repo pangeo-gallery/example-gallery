@@ -45,6 +45,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          fit fetch
           git checkout --track origin/binderbot-built
           git stash apply
           git commit -m "Binderbot output" -a
