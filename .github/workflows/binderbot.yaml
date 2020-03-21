@@ -30,10 +30,11 @@ jobs:
         with:
           python-version: '3.8'
           architecture: 'x64'
-      - name: Install Binderbot from github maskter
+      - name: Install Binderbot from github master
         run: pip install git+https://github.com/pangeo-gallery/binderbot.git
       - name: Build notebooks using Binderbot
         run: >
+          git checkout -b binderbot-new
           python -m binderbot.cli
           --binder-url "$BINDER_URL"
           --repo "$BINDER_REPO"
@@ -44,7 +45,9 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Binderbot build results" -a
+          git commit -m "Binderbot output" -a
+          git checkout --track origin/binderbot-built
+          git merge -s ours binderbot-new
       - name: Push commit
         if: github.ref == 'refs/heads/master'
         uses: ad-m/github-push-action@master
@@ -53,6 +56,7 @@ jobs:
           branch: ${{ env.BINDERBOT_TARGET_BRANCH }}
           force: true
       - name: Trigger repository dispatch on Pangeo Gallery
+        if: github.ref == 'refs/heads/master'
         uses: peter-evans/repository-dispatch@v1
         with:
           repository: ${{ env.GALLERY_REPOSITORY }}
