@@ -47,8 +47,8 @@ jobs:
           git config --local user.name "GitHub Action"
           git fetch
           git checkout --track origin/binderbot-built
-          git stash apply
-          git commit -m "Binderbot output" -a
+          git checkout stash -- .
+          git commit -a -m "Binderbot output"
       - name: Push commit
         if: github.ref == 'refs/heads/master'
         uses: ad-m/github-push-action@master
