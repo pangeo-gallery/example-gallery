@@ -56,6 +56,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           repository: ${{ env.GALLERY_REPOSITORY }}
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           event-type: update-gallery
           client-payload: '{"repo": "${{ github.repository }}", "branch": "${{ env.BINDERBOT_TARGET_BRANCH }}", "sha": "${{ github.sha }}"}'
