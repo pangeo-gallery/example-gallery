@@ -45,9 +45,9 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Binderbot output" -a
           git checkout --track origin/binderbot-built
           git stash apply
+          git commit -m "Binderbot output" -a
       - name: Push commit
         if: github.ref == 'refs/heads/master'
         uses: ad-m/github-push-action@master
