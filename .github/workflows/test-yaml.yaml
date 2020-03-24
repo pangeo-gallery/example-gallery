@@ -8,7 +8,7 @@ jobs:
       - name: parse config
         uses: CumulusDS/get-yaml-paths-action@v0.0.3
         with:
-          file: file.yml
+          file: file.yaml
           bar: foo.bar
           providerStage: provider.stage
       - name: show outputs
