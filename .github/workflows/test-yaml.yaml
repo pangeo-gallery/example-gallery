@@ -1,0 +1,15 @@
+name: Test YAML Parser
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: parse config
+        uses: CumulusDS/get-yaml-paths-action@v0.0.3
+        with:
+          file: file.yml
+          bar: foo.bar
+          providerStage: provider.stage
+      - name: show outputs
+        run: echo ${{ steps.parse_config.outputs.bar }}
