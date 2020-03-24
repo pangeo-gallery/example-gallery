@@ -25,7 +25,7 @@ jobs:
       - name: parse config
         uses: CumulusDS/get-yaml-paths-action@v0.0.3
         with:
-          file: pangeo-gallery.yml
+          file: pangeo-gallery.yaml
           gallery_repository: gallery_repository
           binder_url: binder_url
           binder_repo: binder_repo
