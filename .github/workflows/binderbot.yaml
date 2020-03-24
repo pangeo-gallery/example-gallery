@@ -6,12 +6,16 @@ on:
     branches:
       - master
     paths:
-      - ['**.ipynb', 'pangeo-gallery.yaml', 'thumbnail.png']
+      - '**.ipynb'
+      - 'pangeo-gallery.yaml'
+      - 'thumbnail.png'
   pull_request:
     branches:
       - master
     paths:
-      - ['**.ipynb', 'pangeo-gallery.yaml', 'thumbnail.png']
+      - '**.ipynb'
+      - 'pangeo-gallery.yaml'
+      - 'thumbnail.png'
 
 env:
   BINDER_URL: "http://mybinder.org"
