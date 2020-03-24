@@ -17,18 +17,20 @@ on:
       - 'pangeo-gallery.yaml'
       - 'thumbnail.png'
 
-env:
-  BINDER_URL: "http://mybinder.org"
-  BINDER_REPO: "binder-examples/requirements"
-  BINDER_REF: master
-  BINDERBOT_TARGET_BRANCH: binderbot-built
-  GALLERY_REPOSITORY: "pangeo-gallery/pangeo-gallery"
-
 jobs:
   build:
     name: Binderbot Build
     runs-on: ubuntu-latest
     steps:
+      - name: parse config
+        uses: @cumulusds@v0.0.0
+        with:
+          file: pangeo-gallery.yml
+          gallery_repository: gallery_repository
+          binder_url: binder_url
+          binder_repo: binder_repo
+          binder_ref: binder_ref
+          binderbot_target_branch: binderbot_target_branch
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v1
         with:
@@ -39,9 +41,9 @@ jobs:
       - name: Build notebooks using Binderbot
         run: |
           python -m binderbot.cli \
-          --binder-url "$BINDER_URL" \
-          --repo "$BINDER_REPO" \
-          --ref "$BINDER_REF" \
+          --binder-url "${{ steps.parse_config.outputs.binder_url }}" \
+          --repo "${{ steps.parse_config.outputs.binder_repol }}" \
+          --ref "${{ steps.parse_config.outputs.binder_ref }}" \
           *.ipynb
           git stash
       - name: Commit files
@@ -59,13 +61,16 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ env.BINDERBOT_TARGET_BRANCH }}
+          branch: ${{ steps.parse_config.outputs.binderbot_target_branch }}
           force: true
       - name: Trigger repository dispatch on Pangeo Gallery
         if: github.ref == 'refs/heads/master'
         uses: peter-evans/repository-dispatch@v1
         with:
-          repository: ${{ env.GALLERY_REPOSITORY }}
+          repository: ${{ steps.parse_config.outputs.gallery_repository }}
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           event-type: update-gallery
-          client-payload: '{"repo": "${{ github.repository }}", "branch": "${{ env.BINDERBOT_TARGET_BRANCH }}", "sha": "${{ github.sha }}"}'
+          client-payload: >-
+             '{"repo": "${{ github.repository }}",
+               "branch": "${{ steps.parse_config.outputs.binderbot_target_branch }}"
+               "sha": "${{ github.sha }}"}'
