@@ -6,12 +6,12 @@ on:
     branches:
       - master
     paths:
-      - '**.ipynb'
+      - ['**.ipynb', 'pangeo-gallery.yaml', 'thumbnail.png']
   pull_request:
     branches:
       - master
     paths:
-      - '**.ipynb'
+      - ['**.ipynb', 'pangeo-gallery.yaml', 'thumbnail.png']
 
 env:
   BINDER_URL: "http://mybinder.org"
@@ -48,6 +48,7 @@ jobs:
           git fetch
           git checkout --track origin/binderbot-built
           git checkout stash -- .
+          git checkout master pangeo-gallery.yaml thumbnail.png
           git commit -a -m "Binderbot output"
       - name: Push commit
         if: github.ref == 'refs/heads/master'

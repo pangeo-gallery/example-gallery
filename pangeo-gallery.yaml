@@ -1,5 +1,5 @@
 name: Example Gallery
-description: >
+description: >-
   An example gallery of notebooks used for debugging the Pangeo Gallery
   infrastructure.
 gallery_repository: pangeo-gallery/pangeo-gallery
