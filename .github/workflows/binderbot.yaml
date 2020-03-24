@@ -22,7 +22,8 @@ jobs:
     name: Binderbot Build
     runs-on: ubuntu-latest
     steps:
-      - uses: @cumulusds@v0.0.0
+      - name: parse config
+        uses: CumulusDS/get-yaml-paths-action@v0.0.3
         with:
           file: pangeo-gallery.yml
           gallery_repository: gallery_repository
