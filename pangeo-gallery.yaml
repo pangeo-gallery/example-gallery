@@ -1,0 +1,8 @@
+name: Example Gallery
+description: >
+  An example gallery of notebooks used for debugging the Pangeo Gallery
+  infrastructure.
+gallery_repository: pangeo-gallery/pangeo-gallery
+binder_url: binder-examples/requirements
+binder_ref: master
+binderbot_target_branch: binderbot-built
