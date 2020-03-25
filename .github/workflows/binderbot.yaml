@@ -34,7 +34,7 @@ jobs:
           binder_ref: binder_ref
           binderbot_target_branch: binderbot_target_branch
       - name: Verify output
-        run: >
+        run: |
           echo gallery_repository: "${{ steps.parse.outputs.gallery_repository }}"
           echo binder_url: "${{ steps.parse.outputs.binder_url }}"
           echo binder_repo: "${{ steps.parse.outputs.binder_repo }}"
@@ -50,7 +50,7 @@ jobs:
         run: |
           python -m binderbot.cli \
           --binder-url ${{ steps.parse.outputs.binder_url }} \
-          --repo ${{ steps.parse.outputs.binder_repol }} \
+          --repo ${{ steps.parse.outputs.binder_repo }} \
           --ref ${{ steps.parse.outputs.binder_ref }} \
           *.ipynb
           git stash
