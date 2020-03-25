@@ -22,6 +22,7 @@ jobs:
     name: Binderbot Build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: parse config
         uses: CumulusDS/get-yaml-paths-action@v0.0.3
         with:
@@ -31,7 +32,6 @@ jobs:
           binder_repo: binder_repo
           binder_ref: binder_ref
           binderbot_target_branch: binderbot_target_branch
-      - uses: actions/checkout@v2
       - uses: actions/setup-python@v1
         with:
           python-version: '3.8'
