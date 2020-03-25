@@ -5,6 +5,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: parse config
         uses: CumulusDS/get-yaml-paths-action@v0.0.3
         with:
