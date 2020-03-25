@@ -46,6 +46,10 @@ jobs:
           architecture: 'x64'
       - name: Install Binderbot from github master
         run: pip install git+https://github.com/pangeo-gallery/binderbot.git
+      - name: Create Clean Branch
+        run: |
+          git checkout --orphan binderbot-built ${{ steps.parse.outputs.binderbot_target_branch }}
+          git rm --cached -r .
       - name: Build notebooks using Binderbot
         run: |
           python -m binderbot.cli \
@@ -53,17 +57,13 @@ jobs:
           --repo ${{ steps.parse.outputs.binder_repo }} \
           --ref ${{ steps.parse.outputs.binder_ref }} \
           *.ipynb
-          git stash
       - name: Commit files
         if: github.ref == 'refs/heads/master'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git fetch
-          git checkout --track origin/binderbot-built
-          git checkout stash -- .
-          git checkout master pangeo-gallery.yaml thumbnail.png
-          git commit -a -m "Binderbot output"
+          git add pangeo-gallery.yaml thumbnail.png *.ipynb
+          git commit -m "Binderbot output"
       - name: Push commit
         if: github.ref == 'refs/heads/master'
         uses: ad-m/github-push-action@master
