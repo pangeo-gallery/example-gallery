@@ -48,7 +48,7 @@ jobs:
         run: pip install git+https://github.com/pangeo-gallery/binderbot.git
       - name: Create Clean Branch
         run: |
-          git checkout --orphan binderbot-built ${{ steps.parse.outputs.binderbot_target_branch }}
+          git checkout --orphan ${{ steps.parse.outputs.binderbot_target_branch }}
           git rm --cached -r .
       - name: Build notebooks using Binderbot
         run: |
