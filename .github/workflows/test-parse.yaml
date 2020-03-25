@@ -14,4 +14,4 @@ jobs:
           bar: foo.bar
           providerStage: provider.stage
       - name: show outputs
-        run: echo bar: ${{ steps.parse.outputs.bar }}
+        run: echo "bar: ${{ steps.parse.outputs.bar }}"
