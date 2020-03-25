@@ -27,7 +27,7 @@ jobs:
         uses: CumulusDS/get-yaml-paths-action@v0.0.3
         with:
           file: pangeo-gallery.yaml
-          id: config
+          id: parse
           gallery_repository: gallery_repository
           binder_url: binder_url
           binder_repo: binder_repo
