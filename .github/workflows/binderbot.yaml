@@ -35,11 +35,11 @@ jobs:
           binderbot_target_branch: binderbot_target_branch
       - name: Verify output
         run: >
-          echo gallery_repository: "${{ steps.config.outputs.gallery_repository }}"
-          echo binder_url: "${{ steps.config.outputs.binder_url }}"
-          echo binder_repo: "${{ steps.config.outputs.binder_repo }}"
-          echo binder_ref: "${{ steps.config.outputs.binder_ref }}"
-          echo binderbot_target_branch: "${{ steps.config.outputs.binderbot_target_branch }}"
+          echo gallery_repository: "${{ steps.parse.outputs.gallery_repository }}"
+          echo binder_url: "${{ steps.parse.outputs.binder_url }}"
+          echo binder_repo: "${{ steps.parse.outputs.binder_repo }}"
+          echo binder_ref: "${{ steps.parse.outputs.binder_ref }}"
+          echo binderbot_target_branch: "${{ steps.parse.outputs.binderbot_target_branch }}"
       - uses: actions/setup-python@v1
         with:
           python-version: '3.8'
@@ -49,9 +49,9 @@ jobs:
       - name: Build notebooks using Binderbot
         run: |
           python -m binderbot.cli \
-          --binder-url "${{ steps.config.outputs.binder_url }}" \
-          --repo "${{ steps.config.outputs.binder_repol }}" \
-          --ref "${{ steps.config.outputs.binder_ref }}" \
+          --binder-url "${{ steps.parse.outputs.binder_url }}" \
+          --repo "${{ steps.parse.outputs.binder_repol }}" \
+          --ref "${{ steps.parse.outputs.binder_ref }}" \
           *.ipynb
           git stash
       - name: Commit files
@@ -69,16 +69,16 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ steps.config.outputs.binderbot_target_branch }}
+          branch: ${{ steps.parse.outputs.binderbot_target_branch }}
           force: true
       - name: Trigger repository dispatch on Pangeo Gallery
         if: github.ref == 'refs/heads/master'
         uses: peter-evans/repository-dispatch@v1
         with:
-          repository: ${{ steps.config.outputs.gallery_repository }}
+          repository: ${{ steps.parse.outputs.gallery_repository }}
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           event-type: update-gallery
           client-payload: >-
              '{"repo": "${{ github.repository }}",
-               "branch": "${{ steps.config.outputs.binderbot_target_branch }}"
+               "branch": "${{ steps.parse.outputs.binderbot_target_branch }}"
                "sha": "${{ github.sha }}"}'
