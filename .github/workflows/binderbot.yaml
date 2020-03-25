@@ -79,6 +79,6 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           event-type: update-gallery
           client-payload: >-
-             '{"repo": "${{ github.repository }}",
-               "branch": "${{ steps.parse.outputs.binderbot_target_branch }}"
-               "sha": "${{ github.sha }}"}'
+             {"repo": "${{ github.repository }}",
+              "branch": "${{ steps.parse.outputs.binderbot_target_branch }}"
+              "sha": "${{ github.sha }}"}
