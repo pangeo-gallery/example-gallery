@@ -49,9 +49,9 @@ jobs:
       - name: Build notebooks using Binderbot
         run: |
           python -m binderbot.cli \
-          --binder-url "${{ steps.parse.outputs.binder_url }}" \
-          --repo "${{ steps.parse.outputs.binder_repol }}" \
-          --ref "${{ steps.parse.outputs.binder_ref }}" \
+          --binder-url ${{ steps.parse.outputs.binder_url }} \
+          --repo ${{ steps.parse.outputs.binder_repol }} \
+          --ref ${{ steps.parse.outputs.binder_ref }} \
           *.ipynb
           git stash
       - name: Commit files
