@@ -4,6 +4,6 @@ description: >-
   infrastructure.
 gallery_repository: pangeo-gallery/pangeo-gallery
 binder_url: "http://mybinder.org"
-binder_repo: binder-examples/requirements
+binder_repo: choldgraf/binder-sandbox
 binder_ref: master
 binderbot_target_branch: binderbot-built

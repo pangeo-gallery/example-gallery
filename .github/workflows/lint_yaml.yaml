@@ -1,0 +1,22 @@
+name: Check Yaml
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - binder-gallery.yaml
+  pull_request:
+    branches:
+      - master
+    paths:
+      - binder-gallery.yaml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run action
+      uses: jacobtomlinson/gha-lint-yaml@master
+      with:
+        path: binder-gallery.yaml
+        strict: true

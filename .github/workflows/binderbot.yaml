@@ -7,14 +7,14 @@ on:
       - master
     paths:
       - '**.ipynb'
-      - 'pangeo-gallery.yaml'
+      - 'binder-gallery.yaml'
       - 'thumbnail.png'
   pull_request:
     branches:
       - master
     paths:
       - '**.ipynb'
-      - 'pangeo-gallery.yaml'
+      - 'binder-gallery.yaml'
       - 'thumbnail.png'
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
         id: parse
         uses: CumulusDS/get-yaml-paths-action@v0.0.3
         with:
-          file: pangeo-gallery.yaml
+          file: binder-gallery.yaml
           gallery_repository: gallery_repository
           binder_url: binder_url
           binder_repo: binder_repo
@@ -62,7 +62,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add pangeo-gallery.yaml thumbnail.png *.ipynb
+          git add binder-gallery.yaml thumbnail.png *.ipynb
           git commit -m "Binderbot output"
       - name: Push commit
         if: github.ref == 'refs/heads/master'
