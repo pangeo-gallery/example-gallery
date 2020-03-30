@@ -1,4 +1,4 @@
-name: Check Yaml
+name: Lint Yaml
 on:
   push:
     branches:
@@ -13,10 +13,11 @@ on:
 
 jobs:
   build:
+    name: Lint Yaml
     runs-on: ubuntu-latest
     steps:
-    - name: Run action
-      uses: jacobtomlinson/gha-lint-yaml@master
+    - uses: actions/checkout@v2
+    - uses: jacobtomlinson/gha-lint-yaml@master
       with:
         path: binder-gallery.yaml
         strict: true
