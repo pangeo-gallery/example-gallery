@@ -72,4 +72,4 @@ jobs:
           branch: ${{ steps.parse.outputs.binderbot_target_branch }}
           force: true
       - name: Trigger repository dispatch on Pangeo Gallery
-        run: curl -f https://pangeo-gallery-bot.herokuapp.com/gallery/submodule-dispatch/${{ GITHUB_REPOSITORY }}
+        run: curl -f https://pangeo-gallery-bot.herokuapp.com/gallery/submodule-dispatch/${{ github.repository }}
